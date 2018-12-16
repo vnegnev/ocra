@@ -41,6 +41,10 @@ class MRI_Sig_Widget(MRI_Sig_Widget_Base, MRI_Sig_Widget_Form):
 
         self.startButton.clicked.connect(self.start)
         self.stopButton.clicked.connect(self.stop)
+		
+		# don't emit valueChanged signal while typing
+        self.freqValue.setKeyboardTracking(False)
+        
         self.freqValue.valueChanged.connect(self.set_freq)
         self.freqCheckBox = QCheckBox('Zoom')
         self.checkBoxLayout.addWidget(self.freqCheckBox)

@@ -47,6 +47,9 @@ class MRI_FID_Widget(MRI_FID_Widget_Base, MRI_FID_Widget_Form):
         self.acquireButton.clicked.connect(self.acquire)
 
         # setup frequency related GUI
+		# don't emit valueChanged signal while typing
+        self.freqValue.setKeyboardTracking(False)
+		
         self.freqValue.valueChanged.connect(self.set_freq)
         self.freqCheckBox = QCheckBox('Zoom')
         self.checkBoxLayout.addWidget(self.freqCheckBox)
