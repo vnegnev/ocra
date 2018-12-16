@@ -4,7 +4,7 @@ class BasicParameters:
 		# TW: These parameters should be from an external "tuneup" parameter file, and it should be possible to save them there,
 		#     and not be hardwired in the code here. Alas I'm using values that are typical for the tabletop magnet #26 in my lab
 		#     that are a reasonable starting point for its configuration as of 12/14/2018
-        self.gradient_offsets = [110, 40, 32]
+        self.gradient_offsets = [117, 35, 33]
         # X -119, Y 42, Z 74 mA
 
         # central frequency (MHz)
