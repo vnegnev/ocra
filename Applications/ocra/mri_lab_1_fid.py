@@ -70,6 +70,12 @@ class MRI_FID_Widget(MRI_FID_Widget_Base, MRI_FID_Widget_Form):
             lambda: self.slider_set_grad_offset(self.horizontalSlider_y))
         self.horizontalSlider_z.sliderReleased.connect(
             lambda: self.slider_set_grad_offset(self.horizontalSlider_z))
+		
+		# Don't emit valueChanged signal while typing
+        self.gradOffset_x.setKeyboardTracking(False)
+        self.gradOffset_y.setKeyboardTracking(False)
+        self.gradOffset_z.setKeyboardTracking(False)
+		
         self.gradOffset_x.valueChanged.connect(lambda: self.set_grad_offset(self.gradOffset_x))
         self.gradOffset_y.valueChanged.connect(lambda: self.set_grad_offset(self.gradOffset_y))
         self.gradOffset_z.valueChanged.connect(lambda: self.set_grad_offset(self.gradOffset_z))
