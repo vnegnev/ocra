@@ -133,61 +133,29 @@ module axi_dac_spi_sequencer_tb;
       
       #10 rst_n = 1;
 
-      // Tests begin
-      #20 bram_portx_rddata = 'h1234;
-      bram_porty_rddata = 'h5678;
-      bram_portz_rddata = 'h9abc;
+      // Manually feeding data into core (TODO: simulate whole BRAM)
+      #20 bram_portx_rddata = 'h123456;
+      bram_porty_rddata = 'h789abc;
+      bram_portz_rddata = 'hdef012;
+
+      #100 test_spi(0, 'h123456);
+      test_spi(1, 'h789abc);
+      test_spi(2, 'hdef012);
+
+      #100 bram_portx_rddata = 'h966996;
+      bram_porty_rddata = 'h822882;
+      bram_portz_rddata = 'hdeadbe;
+
+      #12500 // wait for next SPI transmission (could automate this so that fine-tuning delay is not needed)
+      
+      #100 test_spi(0, 'h966996);
+      test_spi(1, 'h822882);
+      test_spi(2, 'hdeadb0);  // SHOULD STIMULATE AN ERROR DELIBERATELY      
 
       #100000 if (err) $display("THERE WERE ERRORS");
       else $display("Testbench detected no errors.");      
       $finish;
-   end   
-      
-
-   // Tasks for reading and writing AXI bus
-
-   task wr32; //write to bus
-      input [31:0] addr;
-      input [31:0] data;
-      begin
-         #10 S_AXI_WDATA = data;
-         S_AXI_AWADDR = addr;
-         S_AXI_AWVALID = 1;
-         S_AXI_WVALID = 1;
-         fork
-         begin: wait_axi_write
-            wait(S_AXI_AWREADY && S_AXI_WREADY);
-            disable axi_write_timeout;
-         end
-         begin: axi_write_timeout
-            // TODO: #10000 disable wait_axi_write;
-         end
-         join
-         #13 S_AXI_AWVALID = 0;
-         S_AXI_WVALID = 0;
-      end
-   endtask // wr32
-
-   task rd32; //read from bus
-      input [31:0] addr;
-      input [31:0] expected;
-      begin
-         #10 S_AXI_ARVALID = 1;
-         S_AXI_ARADDR = addr;
-         wait(S_AXI_ARREADY);
-         #13 S_AXI_ARVALID = 0;
-         wait(S_AXI_RVALID);
-         #13 if (expected !== S_AXI_RDATA) begin
-            $display("%d ns: Bus read error, address %x, expected output %x, read %x.",
-		     $time, addr, expected, S_AXI_RDATA);
-            err <= 1'd1;
-         end
-         S_AXI_RREADY = 1;
-         S_AXI_ARVALID = 0;
-         #10 S_AXI_RREADY = 0;
-      end
-   endtask // rd32
-
+   end        
    
    axi_dac_spi_sequencer #(/*AUTOINSTPARAM*/
 			   // Parameters
@@ -244,6 +212,77 @@ module axi_dac_spi_sequencer_tb;
 	.S_AXI_ARPROT			(S_AXI_ARPROT[2:0]),
 	.S_AXI_ARVALID			(S_AXI_ARVALID),
 	.S_AXI_RREADY			(S_AXI_RREADY));
+
+   // SPI receiver model
+   reg [23:0] spi_output [0:3];
+   wire [23:0] spi_output_dac0 = spi_output[0], spi_output_dac1 = spi_output[1], spi_output_dac2 = spi_output[2];
+   reg [7:0]  spi_counter = 0;
+   always @(negedge spi_clk) begin // is it negedge or posedge for the dac? I haven't checked
+      if (!spi_syncn) begin
+         spi_output[0] <= {spi_output_dac0[22:0],spi_sdox};
+         spi_output[1] <= {spi_output_dac1[22:0],spi_sdoy};
+         spi_output[2] <= {spi_output_dac2[22:0],spi_sdoz};	 
+      end
+   end
+
+   // Tasks for testing operations
+
+   task wr32; //write to AXI bus
+      input [31:0] addr;
+      input [31:0] data;
+      begin
+         #10 S_AXI_WDATA = data;
+         S_AXI_AWADDR = addr;
+         S_AXI_AWVALID = 1;
+         S_AXI_WVALID = 1;
+         fork
+         begin: wait_axi_write
+            wait(S_AXI_AWREADY && S_AXI_WREADY);
+            disable axi_write_timeout;
+         end
+         begin: axi_write_timeout
+            // TODO: #10000 disable wait_axi_write;
+         end
+         join
+         #13 S_AXI_AWVALID = 0;
+         S_AXI_WVALID = 0;
+      end
+   endtask // wr32
+
+   task rd32; //read from AXI bus
+      input [31:0] addr;
+      input [31:0] expected;
+      begin
+         #10 S_AXI_ARVALID = 1;
+         S_AXI_ARADDR = addr;
+         wait(S_AXI_ARREADY);
+         #13 S_AXI_ARVALID = 0;
+         wait(S_AXI_RVALID);
+         #13 if (expected !== S_AXI_RDATA) begin
+            $display("%d ns: Bus read error, address %x, expected output %x, read %x.",
+		     $time, addr, expected, S_AXI_RDATA);
+            err <= 1'd1;
+         end
+         S_AXI_RREADY = 1;
+         S_AXI_ARVALID = 0;
+         #10 S_AXI_RREADY = 0;
+      end
+   endtask // rd32
+
+   // compare transmitted SPI data against expectation
+   task test_spi;
+      input [1:0] dac_index;
+      input [23:0] expected_payload;
+      begin
+         #50 wait(spi_syncn); // wait for SPI transmission to end
+         #8
+         if (expected_payload != spi_output[dac_index]) begin
+            $display("%d ns, Error on SPI %d, expected output of %h, saw output of %h",
+               $time, dac_index, expected_payload, spi_output[dac_index]);
+	    err <= 1'd1;
+         end else $display("%d ns: spi transfer success", $time);
+      end
+   endtask // test_outputs      
 
 endmodule // axi_dac_spi_sequencer_tb
 
