@@ -1,0 +1,48 @@
+[*]
+[*] GTKWave Analyzer v3.3.94 (w)1999-2018 BSI
+[*] Sat Aug 31 13:17:25 2019
+[*]
+[dumpfile] "/mnt/ubuntu/home/vlad/Documents/mri/ocra/HDL/cores/axi_dac_daisy_spi_sequencer_v1_0/icarus_compile/000_axi_dac_spi_sequencer_tb.lxt"
+[dumpfile_mtime] "Sat Aug 31 12:50:22 2019"
+[dumpfile_size] 79997
+[savefile] "/mnt/ubuntu/home/vlad/Documents/mri/ocra/HDL/cores/axi_dac_daisy_spi_sequencer_v1_0/icarus_compile/001_axi_dac_spi_sequencer_tb.sav"
+[timestart] 11822
+[size] 1920 992
+[pos] -1 -1
+*-9.552209 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] axi_dac_spi_sequencer_tb.
+[sst_width] 230
+[signals_width] 254
+[sst_expanded] 1
+[sst_vpaned_height] 280
+@800200
+-System
+@28
+axi_dac_spi_sequencer_tb.clk[0]
+axi_dac_spi_sequencer_tb.aclk[0]
+axi_dac_spi_sequencer_tb.rst_n[0]
+axi_dac_spi_sequencer_tb.aresetn[0]
+@1000200
+-System
+@800200
+-SPI
+@28
+axi_dac_spi_sequencer_tb.spi_clk[0]
+axi_dac_spi_sequencer_tb.spi_clrn[0]
+axi_dac_spi_sequencer_tb.spi_ldacn[0]
+axi_dac_spi_sequencer_tb.spi_sdox[0]
+axi_dac_spi_sequencer_tb.spi_sdoy[0]
+axi_dac_spi_sequencer_tb.spi_sdoz[0]
+axi_dac_spi_sequencer_tb.spi_syncn[0]
+@1000200
+-SPI
+@800200
+-Internals
+@24
+axi_dac_spi_sequencer_tb.UUT.spi_sequencer_state_reg[2:0]
+@23
+axi_dac_spi_sequencer_tb.UUT.spi_data_reg_daisy[95:0]
+@1000200
+-Internals
+[pattern_trace] 1
+[pattern_trace] 0
