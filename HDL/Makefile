@@ -100,6 +100,12 @@ tmp/%.tree/system.dts: tmp/%.hdf $(DTREE_DIR)
 	$(HSI) -source scripts/devicetree.tcl -tclargs $* $(PROC) $(DTREE_DIR)
 #	patch $@ patches/devicetree.patch
 
+# For bitstreams generated manually in Vivado using the GUI workflow and/or custom BDs
+tmp/ocra_mri_bd.bit.bin:
+	echo "all:{ tmp/ocra_mri.runs/impl_1/system_wrapper.bit}" > tmp/ocra_mri_bd.bif
+	bootgen -image tmp/ocra_mri_bd.bif -arch zynq -process_bitstream bin -w -o $@
+	mv tmp/ocra_mri.runs/impl_1/system_wrapper.bit.bin tmp/ocra_mri_bd.bit.bin
+
 clean:
 	$(RM) fw_printenv tmp
 	$(RM) .Xil usage_statistics_webtalk.html usage_statistics_webtalk.xml
