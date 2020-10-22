@@ -6,7 +6,7 @@
 LD_LIBRARY_PATH =
 
 NAME = ocra_mri
-PART_VARIANT ?= Z20
+PART_VARIANT ?= Z10
 ifeq ($(PART_VARIANT),Z20)
 PART = xc7z020clg400-1
 HWNAME = stemlab_sdr
