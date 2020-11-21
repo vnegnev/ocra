@@ -150,10 +150,10 @@ set_property PACKAGE_PIN E19 [get_ports Vaux9_v_n]
 
 set_property IOSTANDARD LVCMOS33 [get_ports {exp_p_tri_io[*]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {exp_n_tri_io[*]}]
-set_property SLEW FAST [get_ports {exp_p_tri_io[*]}]
-set_property SLEW FAST [get_ports {exp_n_tri_io[*]}]
-set_property DRIVE 8 [get_ports {exp_p_tri_io[*]}]
-set_property DRIVE 8 [get_ports {exp_n_tri_io[*]}]
+set_property SLEW SLOW [get_ports {exp_p_tri_io[*]}]
+set_property SLEW SLOW [get_ports {exp_n_tri_io[*]}]
+set_property DRIVE 4 [get_ports {exp_p_tri_io[*]}]
+set_property DRIVE 4 [get_ports {exp_n_tri_io[*]}]
 set_property PULLTYPE PULLUP [get_ports {exp_p_tri_io[*]}]
 set_property PULLTYPE PULLUP [get_ports {exp_n_tri_io[*]}]
 
@@ -177,12 +177,6 @@ set_property PACKAGE_PIN M15 [get_ports {exp_n_tri_io[7]}]
 # GPA-FHDO ADC input
 set_property IOSTANDARD LVCMOS33 [get_ports exp_p_tri_io_i]
 set_property PACKAGE_PIN K16 [get_ports exp_p_tri_io_i]
-
-set_property IOSTANDARD LVCMOS33 [get_ports exp_p_trg]
-set_property SLEW FAST [get_ports exp_p_trg]
-set_property DRIVE 8 [get_ports exp_p_trg]
-
-set_property PACKAGE_PIN M14 [get_ports exp_p_trg]
 
 ### SATA connector
 
