@@ -146,10 +146,10 @@ set_property PACKAGE_PIN E19 [get_ports Vaux9_v_n]
 
 set_property IOSTANDARD LVCMOS33 [get_ports {exp_p_tri_io[*]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {exp_n_tri_io[*]}]
-set_property SLEW FAST [get_ports {exp_p_tri_io[*]}]
-set_property SLEW FAST [get_ports {exp_n_tri_io[*]}]
-set_property DRIVE 8 [get_ports {exp_p_tri_io[*]}]
-set_property DRIVE 8 [get_ports {exp_n_tri_io[*]}]
+set_property SLEW SLOW [get_ports {exp_p_tri_io[*]}]
+set_property SLEW SLOW [get_ports {exp_n_tri_io[*]}]
+set_property DRIVE 4 [get_ports {exp_p_tri_io[*]}]
+set_property DRIVE 4 [get_ports {exp_n_tri_io[*]}]
 set_property PULLTYPE PULLUP [get_ports {exp_p_tri_io[*]}]
 set_property PULLTYPE PULLUP [get_ports {exp_n_tri_io[*]}]
 
@@ -165,25 +165,18 @@ set_property PACKAGE_PIN L14 [get_ports {exp_p_tri_io[4]}]
 set_property PACKAGE_PIN L15 [get_ports {exp_n_tri_io[4]}]
 set_property PACKAGE_PIN L16 [get_ports {exp_p_tri_io[5]}]
 set_property PACKAGE_PIN L17 [get_ports {exp_n_tri_io[5]}]
-set_property PACKAGE_PIN K16 [get_ports {exp_p_tri_io[6]}]
+# set_property PACKAGE_PIN K16 [get_ports {exp_p_tri_io[6]}]
 set_property PACKAGE_PIN J16 [get_ports {exp_n_tri_io[6]}]
-set_property PACKAGE_PIN M14 [get_ports {exp_p_tri_io[7]}]
 set_property PACKAGE_PIN M15 [get_ports {exp_n_tri_io[7]}]
 
-set_property IOSTANDARD LVCMOS33 [get_ports exp_p_trg]
-set_property SLEW FAST [get_ports exp_p_trg]
-set_property DRIVE 8 [get_ports exp_p_trg]
+# actually exp_pi_tri_io[6] is pin [7] on the pinout; wrote it as [6]
+# to keep the bus intact with the true exp_p_tri_io[6] pin used as an
+# input
+set_property PACKAGE_PIN M14 [get_ports {exp_p_tri_io[6]}]
 
-set_property PACKAGE_PIN M14 [get_ports exp_p_trg]
-
-set_property IOSTANDARD LVCMOS33 [get_ports {exp_n_alex[*]}]
-set_property SLEW FAST [get_ports {exp_n_alex[*]}]
-set_property DRIVE 8 [get_ports {exp_n_alex[*]}]
-
-set_property PACKAGE_PIN L15 [get_ports {exp_n_alex[0]}]
-set_property PACKAGE_PIN L17 [get_ports {exp_n_alex[1]}]
-set_property PACKAGE_PIN J16 [get_ports {exp_n_alex[2]}]
-set_property PACKAGE_PIN M15 [get_ports {exp_n_alex[3]}]
+# GPA-FHDO ADC input
+set_property IOSTANDARD LVCMOS33 [get_ports exp_p_tri_io_i]
+set_property PACKAGE_PIN K16 [get_ports exp_p_tri_io_i]
 
 ### SATA connector
 
