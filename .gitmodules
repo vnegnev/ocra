@@ -1,0 +1,5 @@
+[submodule "HDL/submodules/ocra_grad_ctrl"]
+	path = HDL/submodules/ocra_grad_ctrl
+	url = https://github.com/vnegnev/ocra_grad_ctrl
+[submodule "HDL/submodules/ocra_grad_ctrl/"]
+	branch = bd_creation

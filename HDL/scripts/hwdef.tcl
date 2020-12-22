@@ -14,5 +14,7 @@ if {[get_property PROGRESS [get_runs synth_1]] != "100%"} {
 }
 
 write_hw_platform -fixed -force -file tmp/$project_name.xsa
+# hdf files are deprecated 
+write_hwdef -force -file tmp/$project_name.hdf  
 
 close_project

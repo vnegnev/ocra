@@ -9,6 +9,7 @@ module axis_fifo #
 (
   // System signals
   input  wire                          aclk,
+  input  wire                          wr_en,
 
   // Slave side
   output wire                          s_axis_tready,
@@ -39,6 +40,6 @@ module axis_fifo #
   assign fifo_read_rden = m_axis_tready;
 
   assign fifo_write_data = s_axis_tdata;
-  assign fifo_write_wren = s_axis_tvalid;
+  assign fifo_write_wren = s_axis_tvalid && wr_en;
 
 endmodule

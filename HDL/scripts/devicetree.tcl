@@ -12,18 +12,19 @@ set tree_path tmp/$project_name.tree
 
 file mkdir $hard_path
 file copy -force tmp/$project_name.hdf $hard_path/$project_name.hdf
+hsi set_repo_path $repo_path
 
-set_repo_path $repo_path
+hsi open_hw_design $hard_path/$project_name.hdf
+hsi create_sw_design -proc $proc_name -os device_tree devicetree
 
-open_hw_design $hard_path/$project_name.hdf
-create_sw_design -proc $proc_name -os device_tree devicetree
+set get_os [hsi get_os]
 
-set_property CONFIG.kernel_version {2019.1} [get_os]
-set_property CONFIG.bootargs $boot_args [get_os]
-set_property CONFIG.dt_overlay true [get_os]
-set_property CONFIG.firmware_name $project_name.bit [get_os]
+hsi set_property CONFIG.kernel_version {2019.2} [hsi get_os]
+hsi set_property CONFIG.bootargs $boot_args [hsi get_os]
+hsi set_property CONFIG.dt_overlay true [hsi get_os]
+hsi set_property CONFIG.firmware_name $project_name.bit [hsi get_os]
 
-generate_bsp -dir $tree_path
+hsi generate_bsp -dir $tree_path
 
-close_sw_design [current_sw_design]
-close_hw_design [current_hw_design]
+hsi close_sw_design [hsi current_sw_design]
+hsi close_hw_design [hsi current_hw_design]
