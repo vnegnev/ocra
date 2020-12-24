@@ -28,44 +28,21 @@ CORES_PAVEL = axi_axis_reader_v1_0 axi_axis_writer_v1_0 axi_bram_reader_v1_0 \
 endif
 PROC = ps7_cortexa9_0
 
-CORES = micro_sequencer_v1_0 axi_dac_spi_sequencer_v1_1 axi_dac_daisy_spi_sequencer_v1_0 axis_segmented_bram_reader_v1_0 axi_serial_attenuator_v1_0 axi_four_ltc2656_spi_v1_0
+CORES = micro_sequencer_v1_0 axi_serial_attenuator_v1_0
 
 VIVADO = vivado -nolog -nojournal -mode batch
 HSI = hsi -nolog -nojournal -mode batch
 RM = rm -rf
 
-DTREE_TAG = xilinx-v2019.1
-DTREE_DIR = utils/device-tree-xlnx-$(DTREE_TAG)
-DTREE_TAR = utils/device-tree-xlnx-$(DTREE_TAG).tar.gz
-DTREE_URL = https://github.com/Xilinx/device-tree-xlnx/archive/$(DTREE_TAG).tar.gz
-
-RTL_TAR = tmp/rtl8192cu.tgz
-RTL_URL = https://www.dropbox.com/sh/5fy49wae6xwxa8a/AABNwuLz3dPHK06vEDHmG8mfa/rtl8192cu/rtl8192cu.tgz?dl=1
-
 .PRECIOUS: tmp/cores_pavel/% tmp/cores/% tmp/%.xpr tmp/%.hdf tmp/%.bit tmp/%.bit.bin tmp/%.tree/system.dts
 
-all: tmp/$(NAME).bit.bin tmp/$(NAME).dtbo
+all: tmp/$(NAME).bit.bin 
 
 xpr: tmp/$(NAME).xpr
 
 bit: tmp/$(NAME).bit
 
 hdf: tmp/$(NAME).hdf
-
-$(DTREE_TAR):
-	mkdir -p $(@D)
-	curl -L $(DTREE_URL) -o $@
-
-$(RTL_TAR):
-	mkdir -p $(@D)
-	curl -L $(RTL_URL) -o $@
-
-$(DTREE_DIR): $(DTREE_TAR)
-	mkdir -p $@
-	tar -zxf $< --strip-components=1 --directory=$@
-
-tmp/$(NAME).dtbo: tmp/$(NAME).tree/system.dts
-	dtc -O dtb -o tmp/$(NAME).dtbo -b 0 -@ tmp/$(NAME).tree/pl.dtsi
 
 # shim_controller.dtbo: tmp/$(NAME).tree/system.dts
 # 	dtc -O dtb -o tmp/shim_controller.dtbo -b 0 -@ tmp/$(NAME).tree/pl.dtsi
@@ -94,11 +71,6 @@ tmp/%.bit: tmp/%.xpr
 tmp/%.bit.bin: tmp/%.bit
 	echo "all:{ $^}" > tmp/ocra_mri.bif
 	bootgen -image tmp/ocra_mri.bif -arch zynq -process_bitstream bin -w -o $@
-
-tmp/%.tree/system.dts: tmp/%.hdf $(DTREE_DIR)
-	mkdir -p $(@D)
-	$(HSI) -source scripts/devicetree.tcl -tclargs $* $(PROC) $(DTREE_DIR)
-#	patch $@ patches/devicetree.patch
 
 # For bitstreams generated manually in Vivado using the GUI workflow and/or custom BDs
 tmp/ocra_mri_bd.bit.bin:
