@@ -113,7 +113,7 @@ if {[llength $files] > 0} {
 
 add_files -norecurse -fileset constrs_1 cfg/clocks.xdc
 add_files -norecurse -fileset constrs_1 cfg/ports_Z20.xdc
-add_files -norecurse -fileset constrs_1 cfg/debug_Z20.xdc
+#add_files -norecurse -fileset constrs_1 cfg/debug_Z20.xdc
 
 set_property VERILOG_DEFINE {TOOL_VIVADO} [current_fileset]
 
