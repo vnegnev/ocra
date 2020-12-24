@@ -1,9 +1,3 @@
-[submodule "HDL/ocra_grad_ctrl"]
-	path = HDL/ocra_grad_ctrl
-	url = https://github.com/vnegnev/ocra_grad_ctrl
-[submodule "HDL/cores/ocra_grad_ctrl"]
-	path = HDL/cores/ocra_grad_ctrl
-	url = https://github.com/vnegnev/ocra_grad_ctrl
 [submodule "HDL/submodules/ocra_grad_ctrl"]
 	path = HDL/submodules/ocra_grad_ctrl
 	url = https://github.com/vnegnev/ocra_grad_ctrl
