@@ -1,7 +1,8 @@
-#
-# nco.tcl
 # 2017 by Thomas Witzel
+# 2020 modified by Benjamin Menkuec
 # block design for the NCO 
+
+global adc_clk_freq
 
 # Create xlslice
 cell xilinx.com:ip:xlslice:1.0 slice_1 {
@@ -18,7 +19,7 @@ cell pavel-demin:user:axis_constant:1.0 phase_nco {
 
 # Create dds_compiler
 cell xilinx.com:ip:dds_compiler:6.0 dds_nco {
-  DDS_CLOCK_RATE 122.88
+  DDS_CLOCK_RATE $adc_clk_freq
   SPURIOUS_FREE_DYNAMIC_RANGE 138
   FREQUENCY_RESOLUTION 0.2
   PHASE_INCREMENT Streaming

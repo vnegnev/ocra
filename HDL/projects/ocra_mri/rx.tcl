@@ -1,3 +1,5 @@
+global adc_clk_freq
+
 # Create xlslice
 # Trigger slice on Bit 1 (RX pulse)
 cell xilinx.com:ip:xlslice:1.0 slice_0 {
@@ -69,8 +71,8 @@ cell xilinx.com:ip:cic_compiler:4.0 cic_0 {
   MINIMUM_RATE 25
   MAXIMUM_RATE 8192
   FIXED_OR_INITIAL_RATE 625
-  INPUT_SAMPLE_FREQUENCY 122.88
-  CLOCK_FREQUENCY 122.88
+  INPUT_SAMPLE_FREQUENCY $adc_clk_freq
+  CLOCK_FREQUENCY $adc_clk_freq
   INPUT_DATA_WIDTH 24
   QUANTIZATION Truncation
   OUTPUT_DATA_WIDTH 32
@@ -93,8 +95,8 @@ cell xilinx.com:ip:cic_compiler:4.0 cic_1 {
   MINIMUM_RATE 25
   MAXIMUM_RATE 8192
   FIXED_OR_INITIAL_RATE 625
-  INPUT_SAMPLE_FREQUENCY 122.88
-  CLOCK_FREQUENCY 122.88
+  INPUT_SAMPLE_FREQUENCY $adc_clk_freq
+  CLOCK_FREQUENCY $adc_clk_freq
   INPUT_DATA_WIDTH 24
   QUANTIZATION Truncation
   OUTPUT_DATA_WIDTH 32
