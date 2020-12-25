@@ -101,17 +101,3 @@ cell xilinx.com:ip:axis_subset_converter:1.1 real_0 {
     aclk /pll_0/clk_out1
     aresetn /rst_0/peripheral_aresetn
 }
-
-# extract the real component of the product using a broadcaster in to I and Q
-# a simpler alternative would be to use a axis_subset_converter
-cell xilinx.com:ip:axis_subset_converter:1.1 quotient_0 {
-    S_TDATA_NUM_BYTES.VALUE_SRC USER
-    M_TDATA_NUM_BYTES.VALUE_SRC USER
-    S_TDATA_NUM_BYTES 4
-    M_TDATA_NUM_BYTES 2
-    TDATA_REMAP {tdata[31:16]}
-} {
-	S_AXIS real_0/M_AXIS
-    aclk /pll_0/clk_out1
-    aresetn /rst_0/peripheral_aresetn
-}

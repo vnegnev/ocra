@@ -9,15 +9,6 @@ cell xilinx.com:ip:xlslice:1.0 rate_slice {
   DIN_WIDTH 64 DIN_FROM 47 DIN_TO 32 DOUT_WIDTH 16
 }
 
-# Create axis_clock_converter
-cell xilinx.com:ip:axis_clock_converter:1.1 fifo_0 {
-  TDATA_NUM_BYTES.VALUE_SRC USER
-  TDATA_NUM_BYTES 2
-} {
-  m_axis_aclk /pll_0/clk_out1
-  m_axis_aresetn /rst_0/peripheral_aresetn
-}
-
 # Create axis_lfsr
 cell pavel-demin:user:axis_lfsr:1.0 lfsr_0 {} {
   aclk /pll_0/clk_out1
@@ -34,9 +25,7 @@ cell xilinx.com:ip:cmpy:6.0 mult_0 {
   ROUNDMODE Random_Rounding
   OUTPUTWIDTH 26
 } {
-  S_AXIS_A fifo_0/M_AXIS
   S_AXIS_CTRL lfsr_0/M_AXIS
-  aclk /pll_0/clk_out1
 }
 
 # Create axis_broadcaster

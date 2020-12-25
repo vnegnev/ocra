@@ -36,7 +36,8 @@ apply_bd_automation -rule xilinx.com:bd_rule:processing_system7 -config {
 cell xilinx.com:ip:xlconstant const_0
 
 # Create proc_sys_reset
-cell xilinx.com:ip:proc_sys_reset rst_0
+cell xilinx.com:ip:proc_sys_reset rst_0 
+connect_bd_net [get_bd_pins rst_0/ext_reset_in] [get_bd_pins ps_0/FCLK_RESET0_N]
 
 # ADC
 
@@ -108,9 +109,8 @@ module rx_0 {
   source projects/ocra_mri/rx_Z20.tcl
 } {
   rate_slice/Din cfg_slice_0/Dout
-  fifo_0/S_AXIS adc_0/M_AXIS
-  fifo_0/s_axis_aclk pll_0/clk_out1
-  fifo_0/s_axis_aresetn const_0/dout
+  mult_0/S_AXIS_A adc_0/M_AXIS
+  mult_0/aclk pll_0/clk_out1
 }
 
 #  axis_interpolator_0/cfg_data txinterpolator_slice_0/Dout  
@@ -119,7 +119,7 @@ module tx_0 {
 } {
   slice_1/Din cfg_slice_1/Dout
   axis_interpolator_0/cfg_data txinterpolator_slice_0/Dout
-  quotient_0/M_AXIS dac_0/S_AXIS
+  real_0/M_AXIS dac_0/S_AXIS
 }
 
 module nco_0 {
@@ -277,7 +277,7 @@ set_property -dict [list CONFIG.DIN_WIDTH {8} CONFIG.DIN_TO {2} CONFIG.DIN_FROM 
 connect_bd_net [get_bd_pins grad_bram_enb_slice/Din] [get_bd_pins trigger_slice_0/Dout]
 
 create_bd_cell -type ip -vlnv xilinx.com:ip:xlslice:1.0 grad_bram_offset_slice
-set_property -dict [list CONFIG.DIN_WIDTH {8} CONFIG.DIN_TO {2} CONFIG.DIN_FROM {2} CONFIG.DOUT_WIDTH {1}] [get_bd_cells grad_bram_offset_slice]
+set_property -dict [list CONFIG.DIN_WIDTH {16} CONFIG.DIN_TO {0} CONFIG.DIN_FROM {13} CONFIG.DOUT_WIDTH {14}] [get_bd_cells grad_bram_offset_slice]
 connect_bd_net [get_bd_pins grad_bram_offset_slice/Din] [get_bd_pins micro_sequencer/grad_offset]
 
 
@@ -299,6 +299,9 @@ fhd_sdo_o pio_concat_0/In5
 fhd_ssn_o pio_concat_0/In4
 }
 apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config {  Master {/ps_0/M_AXI_GP0} Slave {/flocra_grad_ctrl/s00_axi} }  [get_bd_intf_pins flocra_grad_ctrl/s00_axi]
+
+set_property range 1M [get_bd_addr_segs {ps_0/Data/SEG_flocra_grad_ctrl_reg0}]
+set_property offset 0x40100000 [get_bd_addr_segs {ps_0/Data/SEG_flocra_grad_ctrl_reg0}]
 
 
 # connect the tx_offset
