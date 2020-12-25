@@ -372,7 +372,7 @@ create_bd_port -dir O -from 7 -to 0 exp_n_tri_io
 create_bd_cell -type ip -vlnv xilinx.com:ip:xlslice:1.0 txgate_slice_0
 set_property -dict [list CONFIG.DIN_WIDTH {64} CONFIG.DIN_FROM {4} CONFIG.DIN_TO {4} CONFIG.DOUT_WIDTH {1}] [get_bd_cells txgate_slice_0]
 connect_bd_net [get_bd_pins micro_sequencer/pulse] [get_bd_pins txgate_slice_0/Din]
-connect_bd_net [get_bd_pins dout spi_concat_0] [get_bd_pins nio_concat_0/In0]
+connect_bd_net [get_bd_pins spi_concat_0/dout] [get_bd_pins nio_concat_0/In0]
 
 
 # Concat with the gradient DAC slice
