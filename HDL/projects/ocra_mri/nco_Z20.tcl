@@ -13,7 +13,7 @@ cell pavel-demin:user:axis_constant:1.0 phase_nco {
   AXIS_TDATA_WIDTH 32
 } {
   cfg_data slice_1/Dout
-  aclk /ps_0/FCLK_CLK0
+  aclk /pll_0/clk_out1
 }
 
 # Create dds_compiler
@@ -30,7 +30,7 @@ cell xilinx.com:ip:dds_compiler:6.0 dds_nco {
   NEGATIVE_SINE true
 } {
   S_AXIS_PHASE phase_nco/M_AXIS
-  aclk /ps_0/FCLK_CLK0
+  aclk /pll_0/clk_out1
 }
 
 # Create axis_broadcaster, no remapping as the stream is copied exactly
@@ -44,6 +44,6 @@ cell xilinx.com:ip:axis_broadcaster:1.1 bcast_nco {
   M01_TDATA_REMAP {tdata[47:0]}
 } {
   S_AXIS dds_nco/M_AXIS_DATA
-  aclk /ps_0/FCLK_CLK0
+  aclk /pll_0/clk_out1
   aresetn /rst_0/peripheral_aresetn
 }

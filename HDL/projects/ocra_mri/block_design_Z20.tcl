@@ -1,23 +1,3 @@
-# Create processing_system7
-cell xilinx.com:ip:processing_system7 ps_0 {
-  PCW_IMPORT_BOARD_PRESET cfg/stemlab_sdr.xml
-} {
-  M_AXI_GP0_ACLK ps_0/FCLK_CLK0
-}
-
-# Create all required interconnections
-apply_bd_automation -rule xilinx.com:bd_rule:processing_system7 -config {
-  make_external {FIXED_IO, DDR}
-  Master Disable
-  Slave Disable
-} [get_bd_cells ps_0]
-
-# Create xlconstant
-cell xilinx.com:ip:xlconstant const_0
-
-# Create proc_sys_reset
-cell xilinx.com:ip:proc_sys_reset rst_0
-
 # Create clk_wiz
 cell xilinx.com:ip:clk_wiz pll_0 {
   PRIMITIVE PLL
@@ -37,6 +17,26 @@ cell xilinx.com:ip:clk_wiz pll_0 {
   clk_in1_p adc_clk_p_i
   clk_in1_n adc_clk_n_i
 }
+
+# Create processing_system7
+cell xilinx.com:ip:processing_system7 ps_0 {
+  PCW_IMPORT_BOARD_PRESET cfg/stemlab_sdr.xml
+} {
+  M_AXI_GP0_ACLK pll_0/clk_out1
+}
+
+# Create all required interconnections
+apply_bd_automation -rule xilinx.com:bd_rule:processing_system7 -config {
+  make_external {FIXED_IO, DDR}
+  Master Disable
+  Slave Disable
+} [get_bd_cells ps_0]
+
+# Create xlconstant
+cell xilinx.com:ip:xlconstant const_0
+
+# Create proc_sys_reset
+cell xilinx.com:ip:proc_sys_reset rst_0
 
 # ADC
 
@@ -105,7 +105,7 @@ cell xilinx.com:ip:xlslice:1.0 cfg_slice_1 {
 # slice_0/Din
 # rst_slice_0/Dout
 module rx_0 {
-  source projects/ocra_mri/rx2_Z20.tcl
+  source projects/ocra_mri/rx_Z20.tcl
 } {
   rate_slice/Din cfg_slice_0/Dout
   fifo_0/S_AXIS adc_0/M_AXIS
@@ -115,13 +115,11 @@ module rx_0 {
 
 #  axis_interpolator_0/cfg_data txinterpolator_slice_0/Dout  
 module tx_0 {
-  source projects/ocra_mri/tx6.tcl
+  source projects/ocra_mri/tx.tcl
 } {
   slice_1/Din cfg_slice_1/Dout
   axis_interpolator_0/cfg_data txinterpolator_slice_0/Dout
-  fifo_1/M_AXIS dac_0/S_AXIS
-  fifo_1/m_axis_aclk pll_0/clk_out1
-  fifo_1/m_axis_aresetn const_0/dout
+  quotient_0/M_AXIS dac_0/S_AXIS
 }
 
 module nco_0 {
