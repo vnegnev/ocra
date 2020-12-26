@@ -62,6 +62,7 @@ module micro_sequencer #
     output reg [15:0] 			      grad_offset,
     output reg 				      m_en, 
     output reg [63:0] 			      pulse,
+    output reg                      hf_reset,
     input 				      cfg,
 	
     // User ports ends
@@ -900,6 +901,7 @@ module micro_sequencer #
 	   stallTimerReg <= 40'hffffffffff;
 	   tx_offset <= 0;
 	   grad_offset <= 0;
+	   hf_reset <= 1;
 	   
 	end
       else if (inExe == 0 && slv_reg0[2:0] == 3'b111) 
@@ -908,6 +910,7 @@ module micro_sequencer #
 	   taskInterrupt(`RESET);
 	   state <= Fetch;
 	   pulse[15:8] <= 8'b10101010;
+	   hf_reset <= 0;
 	   slv_reg1 <= 8'h88; //slv_reg0;
 	end 
       else if (inExe == 1)
