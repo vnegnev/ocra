@@ -198,7 +198,8 @@ module micro_sequencer #
      J=		6'b010111,	// jump to immediate address
      HALT=	6'b011001,	// halt
      PI=	6'b011100,	// pulse lower 32 bit immediately with up to 23 bit delay
-     PR=	6'b011101;	// pulse 64 bit register with up to 40 bit delay
+     PR=	6'b011101,	// pulse 64 bit register with up to 40 bit delay
+     RST=	6'b011011;	// pulse hf_reset pin, active low
    
    reg [0:0] 	     inExe;				// instruction execution
    reg [3:0] 	     state, next_state;		// execution FSM state
@@ -772,6 +773,9 @@ module micro_sequencer #
 		pulse[15:8] <= `PC;
 		state <= Halted;
 		end // when the HALT command is encountered, end the simulation, needs to be modified later
+		RST: begin
+		state <= MemAccess;
+		end
 	     PI: begin
 		state <= MemAccess;
 		end
@@ -825,26 +829,36 @@ module micro_sequencer #
 	WriteBack: begin // Read/Write finish, close memory
 	   case (op)
 	     LD64 : begin
+			hf_reset <= 1;
 		R[formatAa] <= bram_porta_rddata;
 	     end
 	     TXOFFSET: begin
+			hf_reset <= 1;
 		tx_offset <= result[15:0];
 	     end
 	     GRADOFFSET: begin
+			hf_reset <= 1;
 		grad_offset <= result[15:0];
 	     end
 	     DEC: begin 
+			hf_reset <= 1;
 	       R[formatAa] <= result;
 	     end
 	     INC: begin
+			hf_reset <= 1;
 		R[formatAa] <= result;
 	     end
 	     JNZ: begin
+			hf_reset <= 1;
 		`PC <= result[BRAM_ADDR_WIDTH-1:0];
 	     end
 	     J: begin 
+			hf_reset <= 1;
 		`PC <= result[BRAM_ADDR_WIDTH-1:0];
 	     end
+		 RST: begin
+			hf_reset <= 0;
+		 end
 	   endcase // case (op)
 	   
 	   state <= Fetch;
@@ -852,30 +866,11 @@ module micro_sequencer #
 	end // WriteBack:
       endcase
    end endtask
-
-   /* This BS doesn't seem to work
-   // stall timer
-   always @(posedge aclk) begin   
-      if(stallTimerEnable && state == Stall && inExe == 1) 
-	begin
-           if(stallTimerReg == 40'h0000000000) 
-	     begin
-		stallTimerEnable <= 0;
-		//state <= Fetch;
-             end 
-	   else 
-	     begin 
-		stallTimerReg <= stallTimerReg - 1;
-		//state <= Stall;
-             end
-	end 
-   end
-   */
    
    // main loop
    always @(posedge aclk) begin
-         
-      if(slv_reg0[2:0] == 3'b000) 
+   
+    if(slv_reg0[2:0] == 3'b000) 
 	begin
 	   inExe <= 0;
 	   `PC <= 0;
@@ -901,7 +896,7 @@ module micro_sequencer #
 	   stallTimerReg <= 40'hffffffffff;
 	   tx_offset <= 0;
 	   grad_offset <= 0;
-	   hf_reset <= 1;
+	   hf_reset <=1; // hf chain is enabled by default
 	   
 	end
       else if (inExe == 0 && slv_reg0[2:0] == 3'b111) 
@@ -910,7 +905,6 @@ module micro_sequencer #
 	   taskInterrupt(`RESET);
 	   state <= Fetch;
 	   pulse[15:8] <= 8'b10101010;
-	   hf_reset <= 0;
 	   slv_reg1 <= 8'h88; //slv_reg0;
 	end 
       else if (inExe == 1)
