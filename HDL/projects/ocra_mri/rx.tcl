@@ -14,7 +14,7 @@ cell xilinx.com:ip:xlslice:1.0 rate_slice {
 # Create axis_lfsr
 cell pavel-demin:user:axis_lfsr:1.0 lfsr_0 {} {
   aclk /pll_0/clk_out1
-  aresetn /rst_0/peripheral_aresetn
+  aresetn /micro_sequencer/hf_reset
 }
 
 # Create cmpy
@@ -41,7 +41,7 @@ cell xilinx.com:ip:axis_broadcaster:1.1 bcast_0 {
 } {
   S_AXIS mult_0/M_AXIS_DOUT
   aclk /pll_0/clk_out1
-  aresetn /rst_0/peripheral_aresetn
+  aresetn /micro_sequencer/hf_reset
 }
 
 # Create axis_variable
@@ -50,7 +50,7 @@ cell pavel-demin:user:axis_variable:1.0 rate_0 {
 } {
   cfg_data rate_slice/Dout
   aclk /pll_0/clk_out1
-  aresetn /rst_0/peripheral_aresetn
+  aresetn /micro_sequencer/hf_reset
 }
 
 # Create axis_variable
@@ -59,7 +59,7 @@ cell pavel-demin:user:axis_variable:1.0 rate_1 {
 } {
   cfg_data rate_slice/Dout
   aclk /pll_0/clk_out1
-  aresetn /rst_0/peripheral_aresetn
+  aresetn /micro_sequencer/hf_reset
 }
 
 # Create cic_compiler
@@ -83,7 +83,7 @@ cell xilinx.com:ip:cic_compiler:4.0 cic_0 {
   S_AXIS_DATA bcast_0/M00_AXIS
   S_AXIS_CONFIG rate_0/M_AXIS
   aclk /pll_0/clk_out1
-  aresetn /rst_0/peripheral_aresetn
+  aresetn /micro_sequencer/hf_reset
 }
 
 # Create cic_compiler
@@ -107,7 +107,7 @@ cell xilinx.com:ip:cic_compiler:4.0 cic_1 {
   S_AXIS_DATA bcast_0/M01_AXIS
   S_AXIS_CONFIG rate_1/M_AXIS
   aclk /pll_0/clk_out1
-  aresetn /rst_0/peripheral_aresetn
+  aresetn /micro_sequencer/hf_reset
 }
 
 # Create axis_combiner
@@ -118,7 +118,7 @@ cell  xilinx.com:ip:axis_combiner:1.1 comb_0 {
   S00_AXIS cic_1/M_AXIS_DATA
   S01_AXIS cic_0/M_AXIS_DATA
   aclk /pll_0/clk_out1
-  aresetn /rst_0/peripheral_aresetn
+  aresetn /micro_sequencer/hf_reset
 }
 
 # Create fifo_generator
@@ -152,5 +152,5 @@ cell pavel-demin:user:axi_axis_reader:1.0 reader_0 {
 } {
   S_AXIS fifo_1/M_AXIS
   aclk /pll_0/clk_out1
-  aresetn /rst_0/peripheral_aresetn
+  aresetn /micro_sequencer/hf_reset
 }

@@ -60,7 +60,7 @@ cell pavel-demin:user:axis_interpolator:1.0 axis_interpolator_0 {
 } {
     S_AXIS zeroer_0/M_AXIS
     aclk /pll_0/clk_out1
-    aresetn /rst_0/peripheral_aresetn
+    aresetn /micro_sequencer/hf_reset
 }
 
 # Need to understand the behaviour of the multiplier to see what the outcome of multiplying a 16 bit and a 24 bit value
@@ -93,5 +93,5 @@ cell xilinx.com:ip:axis_subset_converter:1.1 real_0 {
 } {
     S_AXIS mult_0/M_AXIS_DOUT
     aclk /pll_0/clk_out1
-    aresetn /rst_0/peripheral_aresetn
+    aresetn /micro_sequencer/hf_reset
 }
