@@ -11,12 +11,6 @@ cell xilinx.com:ip:xlslice:1.0 slice_1 {
   DIN_WIDTH 32 DIN_FROM 15 DIN_TO 0 DOUT_WIDTH 16
 }
 
-# Create axis_lfsr
-cell pavel-demin:user:axis_lfsr:1.0 lfsr_0 {} {
-  aclk /pll_0/clk_out1
-  aresetn /rst_0/peripheral_aresetn
-}
-
 # Create blk_mem_gen
 cell xilinx.com:ip:blk_mem_gen:8.4 bram_0 {
   MEMORY_TYPE True_Dual_Port_RAM

@@ -25,7 +25,7 @@ cell xilinx.com:ip:cmpy:6.0 mult_0 {
   APORTWIDTH 16
   BPORTWIDTH 24
   ROUNDMODE Random_Rounding
-  OUTPUTWIDTH 26
+  OUTPUTWIDTH 32
 } {
   S_AXIS_CTRL lfsr_0/M_AXIS
 }
@@ -35,9 +35,9 @@ cell xilinx.com:ip:axis_broadcaster:1.1 bcast_0 {
   S_TDATA_NUM_BYTES.VALUE_SRC USER
   M_TDATA_NUM_BYTES.VALUE_SRC USER
   S_TDATA_NUM_BYTES 8
-  M_TDATA_NUM_BYTES 3
-  M00_TDATA_REMAP {tdata[23:0]}
-  M01_TDATA_REMAP {tdata[55:32]}
+  M_TDATA_NUM_BYTES 4
+  M00_TDATA_REMAP {tdata[31:0]}
+  M01_TDATA_REMAP {tdata[63:32]}
 } {
   S_AXIS mult_0/M_AXIS_DOUT
   aclk /pll_0/clk_out1
@@ -73,7 +73,7 @@ cell xilinx.com:ip:cic_compiler:4.0 cic_0 {
   FIXED_OR_INITIAL_RATE 625
   INPUT_SAMPLE_FREQUENCY $adc_clk_freq
   CLOCK_FREQUENCY $adc_clk_freq
-  INPUT_DATA_WIDTH 24
+  INPUT_DATA_WIDTH 32
   QUANTIZATION Truncation
   OUTPUT_DATA_WIDTH 32
   USE_XTREME_DSP_SLICE false
@@ -97,7 +97,7 @@ cell xilinx.com:ip:cic_compiler:4.0 cic_1 {
   FIXED_OR_INITIAL_RATE 625
   INPUT_SAMPLE_FREQUENCY $adc_clk_freq
   CLOCK_FREQUENCY $adc_clk_freq
-  INPUT_DATA_WIDTH 24
+  INPUT_DATA_WIDTH 32
   QUANTIZATION Truncation
   OUTPUT_DATA_WIDTH 32
   USE_XTREME_DSP_SLICE false
