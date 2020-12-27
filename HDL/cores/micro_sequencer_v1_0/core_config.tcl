@@ -34,3 +34,4 @@ foreach {logical physical} {
 set bus [ipx::get_bus_interfaces bram_porta_clk]
 set parameter [ipx::add_bus_parameter ASSOCIATED_BUSIF $bus]
 set_property VALUE BRAM_PORTA $parameter
+ipx::associate_bus_interfaces -clock S_AXI_ACLK -reset hf_reset [ipx::current_core]

@@ -775,6 +775,8 @@ module micro_sequencer #
 		end // when the HALT command is encountered, end the simulation, needs to be modified later
 		RST: begin
 		state <= MemAccess;
+		 hf_reset <= 0;
+
 		end
 	     PI: begin
 		state <= MemAccess;
@@ -824,43 +826,35 @@ module micro_sequencer #
 
 	MemAccess2: begin
 	   state <= WriteBack;
+
 	end
 	
 	WriteBack: begin // Read/Write finish, close memory
 	   case (op)
 	     LD64 : begin
-			hf_reset <= 1;
 		R[formatAa] <= bram_porta_rddata;
 	     end
 	     TXOFFSET: begin
-			hf_reset <= 1;
 		tx_offset <= result[15:0];
 	     end
 	     GRADOFFSET: begin
-			hf_reset <= 1;
 		grad_offset <= result[15:0];
 	     end
 	     DEC: begin 
-			hf_reset <= 1;
 	       R[formatAa] <= result;
 	     end
 	     INC: begin
-			hf_reset <= 1;
 		R[formatAa] <= result;
 	     end
 	     JNZ: begin
-			hf_reset <= 1;
 		`PC <= result[BRAM_ADDR_WIDTH-1:0];
 	     end
 	     J: begin 
-			hf_reset <= 1;
 		`PC <= result[BRAM_ADDR_WIDTH-1:0];
 	     end
-		 RST: begin
-			hf_reset <= 0;
-		 end
 	   endcase // case (op)
-	   
+
+		 hf_reset <= 1;	   
 	   state <= Fetch;
 	  
 	end // WriteBack:
