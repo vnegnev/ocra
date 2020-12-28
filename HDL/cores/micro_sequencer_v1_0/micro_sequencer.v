@@ -150,12 +150,7 @@ module micro_sequencer #
    
    //reg [5:0] a, b, c;
    reg [31:0] 	     CF;
-   
-   //reg [4:0] c5;
-	//reg signed [31:0] c12, c16, c24, Ra, Rb, Rc, pc0; // pc0: instruction pc
-   //reg [63:0] uc16, URa, URb, URc, HI, LO, CF, tmp;
-   reg [63:0] 	     cycles;
-   
+      
    // register name
 `define SP R[33]    // Stack Pointer
 `define LR R[33]    // Link Register
@@ -674,7 +669,6 @@ module micro_sequencer #
 	      stallTimerReg <= 40'hffffffffff;
 	      // output no pulse
 	      //pulse = 64'h000000000000ff00;
-	      cycles <= 0;
 	   end
 	   `ABORT: begin `PC <= 1; end
 	   `IRQ: begin `PC <= 2; `IE <= 0; inExe <= 1; end
@@ -885,7 +879,6 @@ module micro_sequencer #
 	   slv_reg9 <= 0; 
 	   slv_reg10 <= 0;
 	   int_mem_addr <= 0;
-	   cycles <= 0;
 	   stallTimerEnable <= 0; 
 	   stallTimerReg <= 40'hffffffffff;
 	   tx_offset <= 0;
@@ -922,22 +915,7 @@ module micro_sequencer #
 	   slv_reg8 <= R[2][63:32];
 	   slv_reg9 <= R[2][31:0];
 	   slv_reg10[12:0] <= directAddress;
-	   slv_reg10[31:26] <= op;
-
-	   
-	   // 1000 0000 = 0x80
-	   // 1001 0000 = 0x90
-	   
-	   if(cycles == 125000000) begin
-	      //pulse[15:8] <= slv_reg8[7:0]; // set the LEDs to the register written
-	      cycles <= cycles + 1;
-	   end
-	   else if(cycles == 250000000) begin
-	      //pulse[15:8] <= slv_reg9[7:0];
-	      cycles <= 0;
-	   end
-	   else begin
-	      cycles <= cycles+1;
+	   slv_reg10[31:26] <= op;	   
 	   end
 	end // if (inExe == 1)
       else
@@ -947,7 +925,6 @@ module micro_sequencer #
       
       // thats just the output register for debugging
       pc <= `PC;
-      //cycles <= cycles + 1;
    end
    
    //
