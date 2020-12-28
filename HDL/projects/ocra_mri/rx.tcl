@@ -122,6 +122,15 @@ cell  xilinx.com:ip:axis_combiner:1.1 comb_0 {
   aresetn /micro_sequencer/hf_reset
 }
 
+# Create inverter for fifo reset
+cell xilinx.com:ip:util_vector_logic:2.0 fifo_reset_inverter {
+	C_SIZE 1
+	C_OPERATION {not}
+	LOGO_FILE {data/sym_notgate.png}
+} {
+  Op1 /micro_sequencer/hf_reset
+}
+
 # Create fifo_generator
 cell xilinx.com:ip:fifo_generator:13.2 fifo_generator_0 {
   PERFORMANCE_OPTIONS First_Word_Fall_Through
@@ -133,7 +142,7 @@ cell xilinx.com:ip:fifo_generator:13.2 fifo_generator_0 {
   READ_DATA_COUNT_WIDTH 15
 } {
   clk /pll_0/clk_out1
-  srst slice_0/Dout
+  srst fifo_reset_inverter/Res
 }
 
 # Create axis_fifo
@@ -144,6 +153,7 @@ cell pavel-demin:user:axis_fifo:1.0 fifo_1 {
   S_AXIS comb_0/M_AXIS
   FIFO_READ fifo_generator_0/FIFO_READ
   FIFO_WRITE fifo_generator_0/FIFO_WRITE
+  wr_en slice_0/Dout
   aclk /pll_0/clk_out1
 }
 
