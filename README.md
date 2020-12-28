@@ -10,20 +10,29 @@ Ocra development wont continue here. We switched to a stream based sequencer.
 To get the latest version running do:
 
 git clone https://github.com/catkira/ocra.git
+
 cd ocra
+
 git checkout hf_chain_reset
+
 git submodule update --recursive --remote
 
 cd ..
+
 git clone https://github.com/catkira/ocra-pulseq
+
 git checkout reset_instruction
 
 cd ..
+
 git clone https://github.com/catkira/marcos_client
+
 git checkout shim-interface
 
 cd ..
+
 git clone https://github.com/catkira/marcos_extras.git
+
 git checkout vn/scratch
 
 To compile the HDL sources do:
