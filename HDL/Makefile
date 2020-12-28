@@ -31,18 +31,30 @@ PROC = ps7_cortexa9_0
 CORES = micro_sequencer_v1_0 axi_serial_attenuator_v1_0 axis_segmented_bram_reader_v1_0 flocra_grad_ctrl_v1_0
 
 VIVADO = vivado -nolog -nojournal -mode batch
-HSI = hsi -nolog -nojournal -mode batch
 RM = rm -rf
+
+DTREE_TAG = xilinx-v2019.2
+DTREE_DIR = utils/device-tree-xlnx-$(DTREE_TAG)
+DTREE_TAR = utils/device-tree-xlnx-$(DTREE_TAG).tar.gz
+DTREE_URL = https://github.com/Xilinx/device-tree-xlnx/archive/$(DTREE_TAG).tar.gz
 
 .PRECIOUS: tmp/cores_pavel/% tmp/cores/% tmp/%.xpr tmp/%.hdf tmp/%.bit tmp/%.bit.bin tmp/%.tree/system.dts
 
-all: tmp/$(NAME).bit.bin 
+all: tmp/$(NAME).bit.bin tmp/$(NAME).dtbo
 
 xpr: tmp/$(NAME).xpr
 
 bit: tmp/$(NAME).bit
 
 hdf: tmp/$(NAME).hdf
+
+$(DTREE_TAR):
+	mkdir -p $(@D)
+	curl -L $(DTREE_URL) -o $@
+	
+$(DTREE_DIR): $(DTREE_TAR)
+	mkdir -p $@
+	tar -zxf $< --strip-components=1 --directory=$@
 
 # shim_controller.dtbo: tmp/$(NAME).tree/system.dts
 # 	dtc -O dtb -o tmp/shim_controller.dtbo -b 0 -@ tmp/$(NAME).tree/pl.dtsi
@@ -71,6 +83,13 @@ tmp/%.bit: tmp/%.xpr
 tmp/%.bit.bin: tmp/%.bit
 	echo "all:{ $^}" > tmp/ocra_mri.bif
 	bootgen -image tmp/ocra_mri.bif -arch zynq -process_bitstream bin -w -o $@
+	
+tmp/%.tree/system.dts: tmp/%.hdf $(DTREE_DIR)
+	mkdir -p $(@D)
+	xsct scripts/devicetree.tcl $(NAME) $(PROC) $(DTREE_DIR)	
+	
+tmp/$(NAME).dtbo: tmp/$(NAME).tree/system.dts
+	dtc -O dtb -o tmp/$(NAME).dtbo -b 0 -@ tmp/$(NAME).tree/pl.dtsi	
 
 # For bitstreams generated manually in Vivado using the GUI workflow and/or custom BDs
 tmp/ocra_mri_bd.bit.bin:
