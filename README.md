@@ -33,7 +33,7 @@ cd ..
 
 git clone https://github.com/catkira/marcos_extras.git
 
-git checkout vn/scratch
+git checkout hf_chain_reset
 
 To compile the HDL sources do:
 - install Vivado on Linux
