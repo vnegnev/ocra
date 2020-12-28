@@ -23,7 +23,7 @@ cell xilinx.com:ip:dds_compiler:6.0 dds_nco {
   SPURIOUS_FREE_DYNAMIC_RANGE 138
   FREQUENCY_RESOLUTION 0.2
   PHASE_INCREMENT Streaming
-  HAS_TREADY true
+  HAS_TREADY false
   HAS_PHASE_OUT false
   PHASE_WIDTH 30
   OUTPUT_WIDTH 24

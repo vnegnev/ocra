@@ -916,7 +916,6 @@ module micro_sequencer #
 	   slv_reg9 <= R[2][31:0];
 	   slv_reg10[12:0] <= directAddress;
 	   slv_reg10[31:26] <= op;	   
-	   end
 	end // if (inExe == 1)
       else
 	begin
