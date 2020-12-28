@@ -5,7 +5,7 @@ Remaining issues are:
 - can only run very short sequences
 - sometimes samples get lost, because sequencer can only be programmed to sample for a certain duration
 
-Ocra development wont continue here. We switched to a stream based sequencer.
+Ocra development won't continue here. We switched to a stream based sequencer.
 
 To get the latest version running do:
 
