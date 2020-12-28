@@ -19,7 +19,7 @@ cell pavel-demin:user:axis_lfsr:1.0 lfsr_0 {} {
 
 # Create cmpy
 cell xilinx.com:ip:cmpy:6.0 mult_0 {
-  FLOWCONTROL Blocking
+  FLOWCONTROL NonBlocking
   APORTWIDTH.VALUE_SRC USER
   BPORTWIDTH.VALUE_SRC USER
   APORTWIDTH 16
@@ -38,6 +38,7 @@ cell xilinx.com:ip:axis_broadcaster:1.1 bcast_0 {
   M_TDATA_NUM_BYTES 4
   M00_TDATA_REMAP {tdata[31:0]}
   M01_TDATA_REMAP {tdata[63:32]}
+  HAS_TREADY 0
 } {
   S_AXIS mult_0/M_AXIS_DOUT
   aclk /pll_0/clk_out1
@@ -77,7 +78,7 @@ cell xilinx.com:ip:cic_compiler:4.0 cic_0 {
   QUANTIZATION Truncation
   OUTPUT_DATA_WIDTH 32
   USE_XTREME_DSP_SLICE false
-  HAS_DOUT_TREADY true
+  HAS_DOUT_TREADY false
   HAS_ARESETN true
 } {
   S_AXIS_DATA bcast_0/M00_AXIS
@@ -101,7 +102,7 @@ cell xilinx.com:ip:cic_compiler:4.0 cic_1 {
   QUANTIZATION Truncation
   OUTPUT_DATA_WIDTH 32
   USE_XTREME_DSP_SLICE false
-  HAS_DOUT_TREADY true
+  HAS_DOUT_TREADY false
   HAS_ARESETN true
 } {
   S_AXIS_DATA bcast_0/M01_AXIS
@@ -152,5 +153,5 @@ cell pavel-demin:user:axi_axis_reader:1.0 reader_0 {
 } {
   S_AXIS fifo_1/M_AXIS
   aclk /pll_0/clk_out1
-  aresetn /micro_sequencer/hf_reset
+  aresetn /rst_0/peripheral_aresetn
 }

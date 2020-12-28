@@ -130,6 +130,30 @@ cell xilinx.com:ip:xlslice:1.0 cfg_slice_1 {
   Din cfg_0/cfg_data
 }
 
+# Create Memory for pulse sequence
+cell xilinx.com:ip:blk_mem_gen:8.4 sequence_memory {
+  MEMORY_TYPE Simple_Dual_Port_RAM
+  USE_BRAM_BLOCK Stand_Alone
+  WRITE_WIDTH_A 32
+  WRITE_DEPTH_A 16384
+  WRITE_WIDTH_B 64
+  ENABLE_A Always_Enabled
+  ENABLE_B Always_Enabled
+  REGISTER_PORTB_OUTPUT_OF_MEMORY_PRIMITIVES false
+}
+
+
+# Create microsequencer
+cell open-mri:user:micro_sequencer:1.0 micro_sequencer {
+  C_S_AXI_DATA_WIDTH 32
+  C_S_AXI_ADDR_WIDTH 32
+  BRAM_DATA_WIDTH 64
+  BRAM_ADDR_WIDTH 13
+} {
+  BRAM_PORTA sequence_memory/BRAM_PORTB
+}
+
+
 # Removed these connections from rx:
 # slice_0/Din
 # rst_slice_0/Dout
@@ -203,18 +227,6 @@ apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config {
 set_property RANGE 64K [get_bd_addr_segs ps_0/Data/SEG_writer_0_reg0]
 set_property OFFSET 0x40020000 [get_bd_addr_segs ps_0/Data/SEG_writer_0_reg0]
 
-# Create Memory for pulse sequence
-# (Could also use V8.3)
-cell xilinx.com:ip:blk_mem_gen:8.4 sequence_memory {
-  MEMORY_TYPE Simple_Dual_Port_RAM
-  USE_BRAM_BLOCK Stand_Alone
-  WRITE_WIDTH_A 32
-  WRITE_DEPTH_A 16384
-  WRITE_WIDTH_B 64
-  ENABLE_A Always_Enabled
-  ENABLE_B Always_Enabled
-  REGISTER_PORTB_OUTPUT_OF_MEMORY_PRIMITIVES false
-}
 
 # Load some initial data to the memory
 #set_property -dict [list CONFIG.Load_Init_File {true} CONFIG.Coe_File {/home/red-pitaya/red-pitaya-notes.old/test.coe}] [get_bd_cells sequence_memory]
@@ -238,15 +250,6 @@ apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config {
 set_property RANGE 64K [get_bd_addr_segs ps_0/Data/SEG_sequence_writer_reg0]
 set_property OFFSET 0x40030000 [get_bd_addr_segs ps_0/Data/SEG_sequence_writer_reg0]
 
-# Create microsequencer
-cell open-mri:user:micro_sequencer:1.0 micro_sequencer {
-  C_S_AXI_DATA_WIDTH 32
-  C_S_AXI_ADDR_WIDTH 32
-  BRAM_DATA_WIDTH 64
-  BRAM_ADDR_WIDTH 13
-} {
-  BRAM_PORTA sequence_memory/BRAM_PORTB
-}
 
 # Create all required interconnections
 apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config {

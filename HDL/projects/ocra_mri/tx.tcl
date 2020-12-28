@@ -31,6 +31,7 @@ cell pavel-demin:user:axi_bram_writer:1.0 writer_0 {
   BRAM_ADDR_WIDTH 14
 } {
   BRAM_PORTA bram_0/BRAM_PORTA
+  aresetn /rst_0/peripheral_aresetn
 }
 
 # Create axis_bram_reader
@@ -71,7 +72,7 @@ cell pavel-demin:user:axis_interpolator:1.0 axis_interpolator_0 {
 # No control connection needed
 # S_AXIS_CTRL lfsr_0/M_AXIS
 cell xilinx.com:ip:cmpy:6.0 mult_0 {
-  FLOWCONTROL Blocking
+  FLOWCONTROL NonBlocking
   APORTWIDTH.VALUE_SRC USER
   BPORTWIDTH.VALUE_SRC USER
   APORTWIDTH 16
