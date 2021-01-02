@@ -13,7 +13,7 @@ git clone -b hf_chain_reset https://github.com/catkira/ocra.git
 
 cd ocra
 
-git submodule update --recursive --remote
+git submodule update --init --remote
 
 cd ..
 
