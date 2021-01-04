@@ -22,8 +22,7 @@
         "comb_iqmerge": "",
         "lfsr_0": "",
         "rate": "",
-        "cic_imag": "",
-        "axis_dwidth_converter_0": ""
+        "cic_imag": ""
       },
       "pio_concat_0": "",
       "spi_concat_0": "",
@@ -49,8 +48,7 @@
         "comb_iqmerge": "",
         "lfsr_0": "",
         "rate": "",
-        "cic_imag": "",
-        "axis_dwidth_converter_0": ""
+        "cic_imag": ""
       },
       "ps_0_axi_periph": {
         "s00_couplers": {
@@ -2009,63 +2007,9 @@
                 "value": "true"
               }
             }
-          },
-          "axis_dwidth_converter_0": {
-            "vlnv": "xilinx.com:ip:axis_dwidth_converter:1.1",
-            "xci_name": "system_axis_dwidth_converter_0_0",
-            "parameters": {
-              "M_TDATA_NUM_BYTES": {
-                "value": "4"
-              },
-              "S_TDATA_NUM_BYTES": {
-                "value": "8"
-              }
-            }
           }
         },
         "interface_nets": {
-          "comb_iqmerge_M_AXIS": {
-            "interface_ports": [
-              "comb_iqmerge/M_AXIS",
-              "axis_dwidth_converter_0/S_AXIS"
-            ]
-          },
-          "comp2iq_M01_AXIS": {
-            "interface_ports": [
-              "cic_imag/S_AXIS_DATA",
-              "comp2iq/M01_AXIS"
-            ]
-          },
-          "mult_0_M_AXIS_DOUT": {
-            "interface_ports": [
-              "comp2iq/S_AXIS",
-              "mult_0/M_AXIS_DOUT"
-            ]
-          },
-          "Conn1": {
-            "interface_ports": [
-              "S_AXIS_ADC",
-              "mult_0/S_AXIS_A"
-            ]
-          },
-          "bcast_0_M00_AXIS": {
-            "interface_ports": [
-              "cic_real/S_AXIS_DATA",
-              "comp2iq/M00_AXIS"
-            ]
-          },
-          "S_AXIS_B_1": {
-            "interface_ports": [
-              "S_AXIS_DDS_IQ",
-              "mult_0/S_AXIS_B"
-            ]
-          },
-          "lfsr_0_M_AXIS": {
-            "interface_ports": [
-              "mult_0/S_AXIS_CTRL",
-              "lfsr_0/M_AXIS"
-            ]
-          },
           "cic_real_M_AXIS_DATA": {
             "interface_ports": [
               "cic_real/M_AXIS_DATA",
@@ -2096,10 +2040,46 @@
               "rate/S_AXIS"
             ]
           },
-          "axis_dwidth_converter_0_M_AXIS": {
+          "comp2iq_M01_AXIS": {
+            "interface_ports": [
+              "cic_imag/S_AXIS_DATA",
+              "comp2iq/M01_AXIS"
+            ]
+          },
+          "Conn1": {
+            "interface_ports": [
+              "S_AXIS_ADC",
+              "mult_0/S_AXIS_A"
+            ]
+          },
+          "mult_0_M_AXIS_DOUT": {
+            "interface_ports": [
+              "comp2iq/S_AXIS",
+              "mult_0/M_AXIS_DOUT"
+            ]
+          },
+          "S_AXIS_B_1": {
+            "interface_ports": [
+              "S_AXIS_DDS_IQ",
+              "mult_0/S_AXIS_B"
+            ]
+          },
+          "bcast_0_M00_AXIS": {
+            "interface_ports": [
+              "cic_real/S_AXIS_DATA",
+              "comp2iq/M00_AXIS"
+            ]
+          },
+          "lfsr_0_M_AXIS": {
+            "interface_ports": [
+              "mult_0/S_AXIS_CTRL",
+              "lfsr_0/M_AXIS"
+            ]
+          },
+          "comb_iqmerge_M_AXIS": {
             "interface_ports": [
               "RX0_DATA",
-              "axis_dwidth_converter_0/M_AXIS"
+              "comb_iqmerge/M_AXIS"
             ]
           }
         },
@@ -2113,8 +2093,7 @@
               "mult_0/aclk",
               "lfsr_0/aclk",
               "rate/aclk",
-              "cic_imag/aclk",
-              "axis_dwidth_converter_0/aclk"
+              "cic_imag/aclk"
             ]
           },
           "aresetn_1": {
@@ -2125,8 +2104,7 @@
               "comb_iqmerge/aresetn",
               "lfsr_0/aresetn",
               "rate/aresetn",
-              "cic_imag/aresetn",
-              "axis_dwidth_converter_0/aresetn"
+              "cic_imag/aresetn"
             ]
           }
         }
@@ -2537,6 +2515,12 @@
               "dac_truncator/M_AXIS"
             ]
           },
+          "Conn2": {
+            "interface_ports": [
+              "M_AXIS_DDS1_IQ",
+              "bcast_nco1/M01_AXIS"
+            ]
+          },
           "flocra_0_tx0_axis_o": {
             "interface_ports": [
               "S_AXIS_TX0_IQ",
@@ -2547,6 +2531,12 @@
             "interface_ports": [
               "axis_combiner_0/M_AXIS",
               "dac_truncator/S_AXIS"
+            ]
+          },
+          "Conn1": {
+            "interface_ports": [
+              "S_AXIS_DDS1_PHASE",
+              "tx1_nco/S_AXIS_PHASE"
             ]
           },
           "Conn4": {
@@ -2579,6 +2569,12 @@
               "bcast_nco0/M00_AXIS"
             ]
           },
+          "real_1_M_AXIS": {
+            "interface_ports": [
+              "real_1/M_AXIS",
+              "axis_combiner_0/S01_AXIS"
+            ]
+          },
           "mult_0_M_AXIS_DOUT": {
             "interface_ports": [
               "mult_0/M_AXIS_DOUT",
@@ -2609,28 +2605,10 @@
               "bcast_nco0/M01_AXIS"
             ]
           },
-          "Conn1": {
-            "interface_ports": [
-              "S_AXIS_DDS1_PHASE",
-              "tx1_nco/S_AXIS_PHASE"
-            ]
-          },
-          "Conn2": {
-            "interface_ports": [
-              "M_AXIS_DDS1_IQ",
-              "bcast_nco1/M01_AXIS"
-            ]
-          },
           "mult_1_M_AXIS_DOUT": {
             "interface_ports": [
               "real_1/S_AXIS",
               "mult_1/M_AXIS_DOUT"
-            ]
-          },
-          "real_1_M_AXIS": {
-            "interface_ports": [
-              "real_1/M_AXIS",
-              "axis_combiner_0/S01_AXIS"
             ]
           }
         },
@@ -2898,18 +2876,6 @@
                 "value": "true"
               }
             }
-          },
-          "axis_dwidth_converter_0": {
-            "vlnv": "xilinx.com:ip:axis_dwidth_converter:1.1",
-            "xci_name": "system_axis_dwidth_converter_0_1",
-            "parameters": {
-              "M_TDATA_NUM_BYTES": {
-                "value": "4"
-              },
-              "S_TDATA_NUM_BYTES": {
-                "value": "8"
-              }
-            }
           }
         },
         "interface_nets": {
@@ -2925,28 +2891,28 @@
               "comp2iq/M01_AXIS"
             ]
           },
-          "cic_imag_M_AXIS_DATA": {
-            "interface_ports": [
-              "cic_imag/M_AXIS_DATA",
-              "comb_iqmerge/S01_AXIS"
-            ]
-          },
           "cic_real_M_AXIS_DATA": {
             "interface_ports": [
               "cic_real/M_AXIS_DATA",
               "comb_iqmerge/S00_AXIS"
             ]
           },
-          "mult_0_M_AXIS_DOUT": {
+          "cic_imag_M_AXIS_DATA": {
             "interface_ports": [
-              "comp2iq/S_AXIS",
-              "mult_0/M_AXIS_DOUT"
+              "cic_imag/M_AXIS_DATA",
+              "comb_iqmerge/S01_AXIS"
             ]
           },
           "S_AXIS_CONFIG_1": {
             "interface_ports": [
               "S_AXIS_RX_RATE",
               "rate/S_AXIS"
+            ]
+          },
+          "mult_0_M_AXIS_DOUT": {
+            "interface_ports": [
+              "comp2iq/S_AXIS",
+              "mult_0/M_AXIS_DOUT"
             ]
           },
           "bcast_0_M00_AXIS": {
@@ -2981,14 +2947,8 @@
           },
           "comb_iqmerge_M_AXIS": {
             "interface_ports": [
-              "axis_dwidth_converter_0/S_AXIS",
-              "comb_iqmerge/M_AXIS"
-            ]
-          },
-          "axis_dwidth_converter_0_M_AXIS": {
-            "interface_ports": [
               "RX0_DATA",
-              "axis_dwidth_converter_0/M_AXIS"
+              "comb_iqmerge/M_AXIS"
             ]
           }
         },
@@ -3002,8 +2962,7 @@
               "mult_0/aclk",
               "lfsr_0/aclk",
               "rate/aclk",
-              "cic_imag/aclk",
-              "axis_dwidth_converter_0/aclk"
+              "cic_imag/aclk"
             ]
           },
           "aresetn_1": {
@@ -3014,8 +2973,7 @@
               "comb_iqmerge/aresetn",
               "lfsr_0/aresetn",
               "rate/aresetn",
-              "cic_imag/aresetn",
-              "axis_dwidth_converter_0/aresetn"
+              "cic_imag/aresetn"
             ]
           }
         }
@@ -3176,16 +3134,16 @@
           }
         },
         "interface_nets": {
-          "ps_0_axi_periph_to_s00_couplers": {
-            "interface_ports": [
-              "S00_AXI",
-              "s00_couplers/S_AXI"
-            ]
-          },
           "s00_couplers_to_ps_0_axi_periph": {
             "interface_ports": [
               "M00_AXI",
               "s00_couplers/M_AXI"
+            ]
+          },
+          "ps_0_axi_periph_to_s00_couplers": {
+            "interface_ports": [
+              "S00_AXI",
+              "s00_couplers/S_AXI"
             ]
           }
         },
@@ -3222,6 +3180,18 @@
       }
     },
     "interface_nets": {
+      "rx_1_RX0_DATA": {
+        "interface_ports": [
+          "rx_1/RX0_DATA",
+          "flocra_0/rx1_axis_i"
+        ]
+      },
+      "rx_0_RX0_DATA": {
+        "interface_ports": [
+          "flocra_0/rx0_axis_i",
+          "rx_0/RX0_DATA"
+        ]
+      },
       "adc_0_M_AXIS": {
         "interface_ports": [
           "adc_0/M_AXIS",
@@ -3264,40 +3234,10 @@
           "ps_0/DDR"
         ]
       },
-      "tx_M_AXIS_DAC": {
+      "S_AXIS_TX1_IQ_1": {
         "interface_ports": [
-          "dac_0/S_AXIS",
-          "tx/M_AXIS_DAC"
-        ]
-      },
-      "rx_1_RX0_DATA": {
-        "interface_ports": [
-          "rx_1/RX0_DATA",
-          "flocra_0/rx1_axis_i"
-        ]
-      },
-      "flocra_0_rx1_rate_axis_o": {
-        "interface_ports": [
-          "flocra_0/rx1_rate_axis_o",
-          "rx_1/S_AXIS_RX_RATE"
-        ]
-      },
-      "ps_0_M_AXI_GP0": {
-        "interface_ports": [
-          "ps_0/M_AXI_GP0",
-          "ps_0_axi_periph/S00_AXI"
-        ]
-      },
-      "flocra_0_tx0_axis_o": {
-        "interface_ports": [
-          "tx/S_AXIS_TX0_IQ",
-          "flocra_0/tx0_axis_o"
-        ]
-      },
-      "ps_0_axi_periph_M00_AXI": {
-        "interface_ports": [
-          "ps_0_axi_periph/M00_AXI",
-          "flocra_0/s0_axi"
+          "tx/S_AXIS_TX1_IQ",
+          "flocra_0/tx1_axis_o"
         ]
       },
       "S_AXIS_DDS_IQ_1": {
@@ -3306,10 +3246,40 @@
           "flocra_0/rx1_dds_iq_axis_o"
         ]
       },
-      "S_AXIS_TX1_IQ_1": {
+      "ps_0_axi_periph_M00_AXI": {
         "interface_ports": [
-          "tx/S_AXIS_TX1_IQ",
-          "flocra_0/tx1_axis_o"
+          "ps_0_axi_periph/M00_AXI",
+          "flocra_0/s0_axi"
+        ]
+      },
+      "flocra_0_tx0_axis_o": {
+        "interface_ports": [
+          "tx/S_AXIS_TX0_IQ",
+          "flocra_0/tx0_axis_o"
+        ]
+      },
+      "ps_0_M_AXI_GP0": {
+        "interface_ports": [
+          "ps_0/M_AXI_GP0",
+          "ps_0_axi_periph/S00_AXI"
+        ]
+      },
+      "flocra_0_rx1_rate_axis_o": {
+        "interface_ports": [
+          "flocra_0/rx1_rate_axis_o",
+          "rx_1/S_AXIS_RX_RATE"
+        ]
+      },
+      "S_AXIS_B_1": {
+        "interface_ports": [
+          "rx_0/S_AXIS_DDS_IQ",
+          "flocra_0/rx0_dds_iq_axis_o"
+        ]
+      },
+      "tx_M_AXIS_DAC": {
+        "interface_ports": [
+          "dac_0/S_AXIS",
+          "tx/M_AXIS_DAC"
         ]
       },
       "S_AXIS_DDS1_PHASE_1": {
@@ -3322,18 +3292,6 @@
         "interface_ports": [
           "rx_1/S_AXIS_ADC",
           "adc_ab/M01_AXIS"
-        ]
-      },
-      "S_AXIS_B_1": {
-        "interface_ports": [
-          "rx_0/S_AXIS_DDS_IQ",
-          "flocra_0/rx0_dds_iq_axis_o"
-        ]
-      },
-      "rx_0_M_AXIS": {
-        "interface_ports": [
-          "flocra_0/rx0_axis_i",
-          "rx_0/RX0_DATA"
         ]
       },
       "tx_M_AXIS_DDS0_IQ": {
