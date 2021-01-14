@@ -2010,22 +2010,22 @@
           }
         },
         "interface_nets": {
-          "cic_real_M_AXIS_DATA": {
-            "interface_ports": [
-              "cic_real/M_AXIS_DATA",
-              "comb_iqmerge/S00_AXIS"
-            ]
-          },
           "cic_imag_M_AXIS_DATA": {
             "interface_ports": [
               "cic_imag/M_AXIS_DATA",
               "comb_iqmerge/S01_AXIS"
             ]
           },
-          "rate_M01_AXIS": {
+          "cic_real_M_AXIS_DATA": {
             "interface_ports": [
-              "cic_imag/S_AXIS_CONFIG",
-              "rate/M01_AXIS"
+              "cic_real/M_AXIS_DATA",
+              "comb_iqmerge/S00_AXIS"
+            ]
+          },
+          "S_AXIS_CONFIG_1": {
+            "interface_ports": [
+              "S_AXIS_RX_RATE",
+              "rate/S_AXIS"
             ]
           },
           "bcast_1_M00_AXIS": {
@@ -2034,10 +2034,10 @@
               "cic_real/S_AXIS_CONFIG"
             ]
           },
-          "S_AXIS_CONFIG_1": {
+          "rate_M01_AXIS": {
             "interface_ports": [
-              "S_AXIS_RX_RATE",
-              "rate/S_AXIS"
+              "cic_imag/S_AXIS_CONFIG",
+              "rate/M01_AXIS"
             ]
           },
           "comp2iq_M01_AXIS": {
@@ -2521,10 +2521,34 @@
               "bcast_nco1/M01_AXIS"
             ]
           },
+          "bcast_nco_M00_AXIS": {
+            "interface_ports": [
+              "mult_0/S_AXIS_B",
+              "bcast_nco0/M00_AXIS"
+            ]
+          },
+          "mult_1_M_AXIS_DOUT": {
+            "interface_ports": [
+              "real_1/S_AXIS",
+              "mult_1/M_AXIS_DOUT"
+            ]
+          },
+          "real_1_M_AXIS": {
+            "interface_ports": [
+              "real_1/M_AXIS",
+              "axis_combiner_0/S01_AXIS"
+            ]
+          },
           "flocra_0_tx0_axis_o": {
             "interface_ports": [
               "S_AXIS_TX0_IQ",
               "mult_0/S_AXIS_A"
+            ]
+          },
+          "tx0_nco_M_AXIS_DATA": {
+            "interface_ports": [
+              "tx0_nco/M_AXIS_DATA",
+              "bcast_nco0/S_AXIS"
             ]
           },
           "axis_combiner_0_M_AXIS": {
@@ -2545,6 +2569,12 @@
               "mult_1/S_AXIS_A"
             ]
           },
+          "S_AXIS_B_1": {
+            "interface_ports": [
+              "M_AXIS_DDS0_IQ",
+              "bcast_nco0/M01_AXIS"
+            ]
+          },
           "tx1_nco_M_AXIS_DATA": {
             "interface_ports": [
               "tx1_nco/M_AXIS_DATA",
@@ -2555,24 +2585,6 @@
             "interface_ports": [
               "S_AXIS_DDS0_PHASE",
               "tx0_nco/S_AXIS_PHASE"
-            ]
-          },
-          "tx0_nco_M_AXIS_DATA": {
-            "interface_ports": [
-              "tx0_nco/M_AXIS_DATA",
-              "bcast_nco0/S_AXIS"
-            ]
-          },
-          "bcast_nco_M00_AXIS": {
-            "interface_ports": [
-              "mult_0/S_AXIS_B",
-              "bcast_nco0/M00_AXIS"
-            ]
-          },
-          "real_1_M_AXIS": {
-            "interface_ports": [
-              "real_1/M_AXIS",
-              "axis_combiner_0/S01_AXIS"
             ]
           },
           "mult_0_M_AXIS_DOUT": {
@@ -2597,18 +2609,6 @@
             "interface_ports": [
               "mult_1/S_AXIS_B",
               "bcast_nco1/M00_AXIS"
-            ]
-          },
-          "S_AXIS_B_1": {
-            "interface_ports": [
-              "M_AXIS_DDS0_IQ",
-              "bcast_nco0/M01_AXIS"
-            ]
-          },
-          "mult_1_M_AXIS_DOUT": {
-            "interface_ports": [
-              "real_1/S_AXIS",
-              "mult_1/M_AXIS_DOUT"
             ]
           }
         },
@@ -2650,13 +2650,13 @@
             "value": "0"
           },
           "M00_TDATA_REMAP": {
-            "value": "tdata[15:0]"
+            "value": "16'b0, tdata[15:0]"
           },
           "M01_TDATA_REMAP": {
-            "value": "tdata[31:16]"
+            "value": "16'b0, tdata[31:16]"
           },
           "M_TDATA_NUM_BYTES": {
-            "value": "2"
+            "value": "4"
           },
           "S_TDATA_NUM_BYTES": {
             "value": "4"
@@ -2879,22 +2879,22 @@
           }
         },
         "interface_nets": {
-          "bcast_1_M00_AXIS": {
-            "interface_ports": [
-              "rate/M00_AXIS",
-              "cic_real/S_AXIS_CONFIG"
-            ]
-          },
           "comp2iq_M01_AXIS": {
             "interface_ports": [
               "cic_imag/S_AXIS_DATA",
               "comp2iq/M01_AXIS"
             ]
           },
-          "cic_real_M_AXIS_DATA": {
+          "bcast_1_M00_AXIS": {
             "interface_ports": [
-              "cic_real/M_AXIS_DATA",
-              "comb_iqmerge/S00_AXIS"
+              "rate/M00_AXIS",
+              "cic_real/S_AXIS_CONFIG"
+            ]
+          },
+          "S_AXIS_CONFIG_1": {
+            "interface_ports": [
+              "S_AXIS_RX_RATE",
+              "rate/S_AXIS"
             ]
           },
           "cic_imag_M_AXIS_DATA": {
@@ -2903,10 +2903,10 @@
               "comb_iqmerge/S01_AXIS"
             ]
           },
-          "S_AXIS_CONFIG_1": {
+          "cic_real_M_AXIS_DATA": {
             "interface_ports": [
-              "S_AXIS_RX_RATE",
-              "rate/S_AXIS"
+              "cic_real/M_AXIS_DATA",
+              "comb_iqmerge/S00_AXIS"
             ]
           },
           "mult_0_M_AXIS_DOUT": {
@@ -3104,16 +3104,16 @@
               }
             },
             "interface_nets": {
-              "s00_couplers_to_auto_pc": {
-                "interface_ports": [
-                  "S_AXI",
-                  "auto_pc/S_AXI"
-                ]
-              },
               "auto_pc_to_s00_couplers": {
                 "interface_ports": [
                   "M_AXI",
                   "auto_pc/M_AXI"
+                ]
+              },
+              "s00_couplers_to_auto_pc": {
+                "interface_ports": [
+                  "S_AXI",
+                  "auto_pc/S_AXI"
                 ]
               }
             },
@@ -3134,16 +3134,16 @@
           }
         },
         "interface_nets": {
-          "s00_couplers_to_ps_0_axi_periph": {
-            "interface_ports": [
-              "M00_AXI",
-              "s00_couplers/M_AXI"
-            ]
-          },
           "ps_0_axi_periph_to_s00_couplers": {
             "interface_ports": [
               "S00_AXI",
               "s00_couplers/S_AXI"
+            ]
+          },
+          "s00_couplers_to_ps_0_axi_periph": {
+            "interface_ports": [
+              "M00_AXI",
+              "s00_couplers/M_AXI"
             ]
           }
         },
@@ -3234,28 +3234,28 @@
           "ps_0/DDR"
         ]
       },
-      "S_AXIS_TX1_IQ_1": {
-        "interface_ports": [
-          "tx/S_AXIS_TX1_IQ",
-          "flocra_0/tx1_axis_o"
-        ]
-      },
       "S_AXIS_DDS_IQ_1": {
         "interface_ports": [
           "rx_1/S_AXIS_DDS_IQ",
           "flocra_0/rx1_dds_iq_axis_o"
         ]
       },
-      "ps_0_axi_periph_M00_AXI": {
-        "interface_ports": [
-          "ps_0_axi_periph/M00_AXI",
-          "flocra_0/s0_axi"
-        ]
-      },
       "flocra_0_tx0_axis_o": {
         "interface_ports": [
           "tx/S_AXIS_TX0_IQ",
           "flocra_0/tx0_axis_o"
+        ]
+      },
+      "S_AXIS_TX1_IQ_1": {
+        "interface_ports": [
+          "tx/S_AXIS_TX1_IQ",
+          "flocra_0/tx1_axis_o"
+        ]
+      },
+      "ps_0_axi_periph_M00_AXI": {
+        "interface_ports": [
+          "ps_0_axi_periph/M00_AXI",
+          "flocra_0/s0_axi"
         ]
       },
       "ps_0_M_AXI_GP0": {
@@ -3270,28 +3270,28 @@
           "rx_1/S_AXIS_RX_RATE"
         ]
       },
-      "S_AXIS_B_1": {
-        "interface_ports": [
-          "rx_0/S_AXIS_DDS_IQ",
-          "flocra_0/rx0_dds_iq_axis_o"
-        ]
-      },
       "tx_M_AXIS_DAC": {
         "interface_ports": [
           "dac_0/S_AXIS",
           "tx/M_AXIS_DAC"
         ]
       },
-      "S_AXIS_DDS1_PHASE_1": {
-        "interface_ports": [
-          "tx/S_AXIS_DDS1_PHASE",
-          "flocra_0/dds1_phase_axis_o"
-        ]
-      },
       "S_AXIS_ADC_1": {
         "interface_ports": [
           "rx_1/S_AXIS_ADC",
           "adc_ab/M01_AXIS"
+        ]
+      },
+      "S_AXIS_B_1": {
+        "interface_ports": [
+          "rx_0/S_AXIS_DDS_IQ",
+          "flocra_0/rx0_dds_iq_axis_o"
+        ]
+      },
+      "S_AXIS_DDS1_PHASE_1": {
+        "interface_ports": [
+          "tx/S_AXIS_DDS1_PHASE",
+          "flocra_0/dds1_phase_axis_o"
         ]
       },
       "tx_M_AXIS_DDS0_IQ": {
