@@ -193,12 +193,20 @@ set_property PACKAGE_PIN M15 [get_ports {exp_n_tri_io[7]}]
 
 # actually exp_pi_tri_io[6] is pin [7] on the pinout; wrote it as [6]
 # to keep the bus intact with the true exp_p_tri_io[6] pin used as an
-# input
+# input. I.e. in the RP schematic, pin M14 is tied to DIO7_P and M15 to DIO7_N
 set_property PACKAGE_PIN M14 [get_ports {exp_p_tri_io[6]}]
 
 # GPA-FHDO ADC input
 set_property IOSTANDARD LVCMOS33 [get_ports exp_p_tri_io_i]
 set_property PACKAGE_PIN K16 [get_ports exp_p_tri_io_i]
+
+# Trigger output, DIO8_P (RP-122 only)
+set_property IOSTANDARD LVCMOS33 [get_ports trig_o]
+set_property PACKAGE_PIN Y9 [get_ports trig_o]
+
+# Trigger input, DIO8_N (RP-122 only)
+set_property IOSTANDARD LVCMOS33 [get_ports trig_i]
+set_property PACKAGE_PIN Y8 [get_ports trig_i]
 
 ### SATA connector
 
